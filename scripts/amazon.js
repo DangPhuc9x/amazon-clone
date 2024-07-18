@@ -1,9 +1,9 @@
-// Array: Represent a list of element
-//        Each element has many properties
-// Object: group multiple properties/value together
+import {cart} from '../data/cart.js';
+
 let productsHTML = '';
 
 // Take each product and store at (object)product and run the function
+// To show all of the product inside product
 products.forEach((product) => {
     productsHTML += `
         <div class="product-container">
