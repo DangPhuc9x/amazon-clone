@@ -4,8 +4,11 @@ import { formatCurrency } from './utils/money.js';
 
 let productsHTML = '';
 
+// Update cart everytime load homepage
+updateCartQuantity();
+
 // Take each product and store at (object)product and run the function
-// To show all of the product inside product
+// To show all of the product inside homepage
 products.forEach((product) => {
     productsHTML += `
         <div class="product-container">
