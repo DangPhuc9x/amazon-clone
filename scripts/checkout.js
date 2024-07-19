@@ -1,4 +1,4 @@
-import { cart, removeFromCart } from "../data/cart.js";
+import { cart, removeFromCart, updateDeliveryOption } from "../data/cart.js";
 import { products } from '../data/products.js';
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
@@ -81,7 +81,14 @@ cart.forEach((cartItem) => {
     `
 })
 
-function deliveryOptionsHTML (machingProduct, cartItem)
+// Using when machingProduct (inside products.js) and cartItem (inside cart.js) point to the same product
+// FUNCTION: To create HTML part about delivery option
+// NOTE: products.js                cart.js                            deliveryOptions.js
+//        productId                 cartItemId
+//                   machingProduct
+//                                  cartItem.deliveryOptionId          deliveryOptions.id
+//                                                            isChecked
+function deliveryOptionsHTML(machingProduct, cartItem)
 {
     let html = '';
 
@@ -95,10 +102,14 @@ function deliveryOptionsHTML (machingProduct, cartItem)
             : `$${formatCurrency(deliveryOption.priceCents)} -`;
 
         // If the deliveryOption inside deliveryOptions.js match with deliveryOptionId inside cart.js
+        // If yes, return true
+        // If no, return false
         const isChecked = deliveryOption.id === cartItem.deliveryOptionId
         
         html += `
-            <div class="delivery-option">
+            <div class="js-delivery-option delivery-option"
+                data-product-id="${machingProduct.id}"
+                data-delivery-option-id="${deliveryOption.id}">
                 <input type="radio"
                     ${isChecked ? 'checked' : ''}
                     class="delivery-option-input"
@@ -132,4 +143,12 @@ document.querySelectorAll('.js-delete-quantity-link')
         });
     });
 
-
+// Make when clicking to any where inside js-delivery-option
+// When clicking, deliveryOptionsHTML() will figure what to choose
+document.querySelectorAll('.js-delivery-option')
+    .forEach((element) => {
+        element.addEventListener('click', () => {
+            const {productId, deliveryOptionId} = element.dataset;
+            updateDeliveryOption(productId, deliveryOptionId);
+        })
+    });
