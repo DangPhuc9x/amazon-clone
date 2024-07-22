@@ -1,5 +1,6 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));
 
+// TESTING SAMPLE
 if (!cart) {
     cart = [{
         productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
