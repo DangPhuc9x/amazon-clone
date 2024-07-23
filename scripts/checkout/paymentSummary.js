@@ -1,6 +1,6 @@
-import { products } from "../../data/products.js";
+import { getProduct } from "../../data/products.js";
 import { cart } from "../../data/cart.js";
-import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
 
 export function renderPaymentSummary() {
@@ -8,37 +8,27 @@ export function renderPaymentSummary() {
     let quantityTotal = 0;
     let itemsPriceCents = 0;
     let shippingPriceCents = 0;
-    let totalBeforeTaxCents;
-    let estimatedTaxCents;
-    let ordertotalCents;
 
     cart.forEach((cartItem) => {
         const productId = cartItem.productId;
-        let machingProduct;
 
-        products.forEach((product) => {
-            if (product.id === productId) {
-                machingProduct = product;
-            }
-        });
+        const machingProduct = getProduct(productId);
 
         quantityTotal += cartItem.quantity;
         itemsPriceCents += (machingProduct.priceCents * cartItem.quantity);
 
-        deliveryOptions.forEach((deliveryOption) => {
-            if (deliveryOption.id === cartItem.deliveryOptionId) {
-                shippingPriceCents += deliveryOption.priceCents
-            }
-        });
+        // Get the deliveryOptionId of item
+        const deliveryOptionId = cartItem.deliveryOptionId;
 
-        console.log(`Name : ${machingProduct.name} - Quantity : ${cartItem.quantity}`);
-        console.log(`Price 1pc : ${machingProduct.priceCents} - Price all : ${itemsPriceCents}`);
+        // Get the info about delivery option of item
+        const deliveryOption = getDeliveryOption(deliveryOptionId);
 
+        shippingPriceCents += deliveryOption.priceCents
     });
 
-    totalBeforeTaxCents = itemsPriceCents + shippingPriceCents;
-    estimatedTaxCents = parseInt((totalBeforeTaxCents / 10).toFixed(0));
-    ordertotalCents = totalBeforeTaxCents + estimatedTaxCents;
+    const totalBeforeTaxCents = itemsPriceCents + shippingPriceCents;
+    const estimatedTaxCents = (totalBeforeTaxCents / 10);
+    const ordertotalCents = totalBeforeTaxCents + estimatedTaxCents;
 
     paymentSummaryHTML += `
         <div class="payment-summary-title">

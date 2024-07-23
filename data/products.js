@@ -661,3 +661,19 @@ export const products = [
     ]
   }
 ];
+
+// productId is belong to item(1) inside cart
+// Loop through each item(2) inside products.js
+// to search the info of the item(1) ID
+// If found, save item(2) info to machingProduct
+export function getProduct(productId) {
+  let machingProduct;
+
+  products.forEach((product) => {
+      if (product.id === productId) {
+          machingProduct = product;
+      }
+  });
+
+  return machingProduct;
+}
