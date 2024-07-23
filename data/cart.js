@@ -1,25 +1,29 @@
-export let cart = JSON.parse(localStorage.getItem('cart'));
+export let cart;
 
-// TESTING SAMPLE
-if (!cart) {
-    cart = [{
-        productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
-        quantity: 2,
-        deliveryOptionId: '1'
-    }, {
-        productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-        quantity: 3,
-        deliveryOptionId: '2'
-    }]
+loadFromStorage();
+
+export function loadFromStorage() {
+    cart = JSON.parse(localStorage.getItem('cart'));
+
+    // TESTING SAMPLE
+    if (!cart) {
+        cart = [{
+            productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
+            quantity: 2,
+            deliveryOptionId: '1'
+        }, {
+            productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+            quantity: 3,
+            deliveryOptionId: '2'
+        }]
+    }
 }
 
 function saveToStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
 };
 
-export function addToCart(button) {
-    // HTML part: data-product-id -> JS part: .dataset.productId
-    const productId = button.dataset.productId;
+export function addToCart(productId) {
     let machingItem;
 
     // Check if select product exist inside cart
