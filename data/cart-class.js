@@ -1,17 +1,21 @@
 class CartGenerate {
+    // Public property
     cartItems;
-    localStorageKey;
+    // Private property:
+    // #<var-name> or #<func-name>
+    // When access, also need '#' before var-name
+    #localStorageKey;
 
     // Run as normal function
     // When creating an object, this will run automatically
     // Should not return anything
     constructor(localStorageKey) {
-        this.localStorageKey = localStorageKey;
-        this.loadFromStorage();
+        this.#localStorageKey = localStorageKey;
+        this.#loadFromStorage();
     }
 
-    loadFromStorage() {
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+    #loadFromStorage() {
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
     
         // TESTING SAMPLE
         if (!this.cartItems) {
@@ -28,7 +32,7 @@ class CartGenerate {
     }
 
     saveToStorage() {
-        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+        localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
 
     addToCart(productId) {
@@ -85,6 +89,9 @@ class CartGenerate {
 // Input parameter will be used for contrustor() function
 const cart = new CartGenerate('cart-oop');
 const businessCart = new CartGenerate('businessCart-oop');
+
+// Access private property ERROR
+// console.log(cart.#localStorageKey);
 
 console.log(cart);
 console.log(businessCart);
