@@ -8,7 +8,7 @@ describe('TEST SUITE: renderOrderSummary', () => {
     let products;
 
     // Hooks: Run code for each test
-    // Run before each of the test below
+    // beforeEach(): Run before each of the test below
     beforeEach(() => {
         // js-order-summary: to show the order when checking delete button
         // js-payment-summary: to support renderOrderSummary() function to be able to complete;
@@ -38,6 +38,7 @@ describe('TEST SUITE: renderOrderSummary', () => {
         renderOrderSummary();
     });
 
+    // afterEach(): Run after each of the test below
     afterEach(() => {
         document.querySelector('.js-test-container').innerHTML = '';
     })
