@@ -2,6 +2,7 @@ import { addToCart, cart, loadFromStorage } from "../../data/cart.js";
 
 // Test Coverage
 // Every statement of the test function
+// Unit test
 describe('TEST SUITE: addToCart', () => {
     it('adds a new product to the cart', () => {
         // Local storage when start reading doesn't always blank
