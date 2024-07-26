@@ -1,5 +1,6 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
+import { loadProducts } from "../../data/products.js";
 
 // Integration test
 // Test website: How the page looks
@@ -36,6 +37,15 @@ describe('TEST SUITE: renderOrderSummary', () => {
         loadFromStorage();
 
         renderOrderSummary();
+    });
+
+    // BACKEND TEST
+    // Built-in function: done()
+    // Wait until this function being called, then continue the program
+    beforeAll((done) => {
+        loadProducts(() => {
+            done();
+        });
     });
 
     // afterEach(): Run after each of the test below

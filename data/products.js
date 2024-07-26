@@ -726,6 +726,8 @@ export const products = [
 export let products = [];
 
 // Load product from BACKEND server
+// Wait for receiving HTTP response finished
+// After that, run the func() 
 export function loadProducts(func) {
   const xhr = new XMLHttpRequest();
   let responseMessage;
