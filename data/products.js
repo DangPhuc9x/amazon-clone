@@ -52,6 +52,7 @@ class Clothing extends Product{
   }
 }
 
+/*
 // Array: Represent a list of element
 //        Each element has many properties
 // Object: group multiple properties/value together
@@ -720,6 +721,32 @@ export const products = [
   }
   return new Product(productDetails);
 });
+*/
+
+export let products = [];
+
+// Load product from BACKEND server
+export function loadProducts(func) {
+  const xhr = new XMLHttpRequest();
+  let responseMessage;
+
+  xhr.addEventListener('load', () => {
+    responseMessage = xhr.response;
+    products = JSON.parse(responseMessage).map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+
+    console.log('Load Products');
+
+    func();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+};
 
 // productId is belong to item(1) inside cart
 // Loop through each item(2) inside products.js
