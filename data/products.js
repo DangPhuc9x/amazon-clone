@@ -1,5 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
+// Parent class: Product
 class Product {
   id;
   image;
@@ -30,7 +31,6 @@ class Product {
   }
 }
 
-// Parent class: Product
 // Child class: Clothing
 // Clothing class inherit all the properties and methods of Product class
 class Clothing extends Product{
