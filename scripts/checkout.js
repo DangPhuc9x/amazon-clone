@@ -1,6 +1,6 @@
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
-import { loadProducts } from "../data/products.js";
+import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 // import '../data/cart-oop.js';
 // import '../data/cart-class.js';
@@ -68,7 +68,8 @@ new Promise((resolve) => {
 });
 */
 
-// Promise.all()
+/*
+// Promise.all() VER 3
 // FUNC: wait for all the promises to finish
 // INPUT: Array of promises
 // NOTES: All the resolve input param will be stored as an array
@@ -89,3 +90,18 @@ Promise.all([
     renderOrderSummary();
     renderPaymentSummary();
 });
+*/
+
+// Promise.all() VER 4
+Promise.all([
+    loadProductsFetch(),
+    new Promise((resolve) => {
+        loadCart(() => {
+            resolve();
+        });
+    })
+]).then((values) => {
+    renderOrderSummary();
+    renderPaymentSummary();
+});
+

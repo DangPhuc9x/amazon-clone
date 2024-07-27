@@ -750,6 +750,36 @@ export function loadProducts(func) {
   xhr.send();
 };
 
+// fetch(): Send HTTP message but uses Promise()
+export function loadProductsFetch() {
+  // fetch(): Make 'GET' request
+  // Create a promise
+  // All the responde from BACKEND will be saved inside a param of the next step
+  //                                                    <response> param inside .then(response)
+  const promise = fetch('https://supersimplebackend.dev/products').then((response) => {
+    // When return a promise, it will wait until finish
+    // AUTO exec JSON.parse() for us
+    return response.json();
+  }).then((productData) => {
+    products = productData.map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+  });
+
+  // Return the promise after the function
+  // To do something after the process (Ex: loadProductsFetch().then())
+  return promise;
+}
+
+/*
+loadProductsFetch().then(() => {
+  console.log('next step');
+});
+*/
+
 // productId is belong to item(1) inside cart
 // Loop through each item(2) inside products.js
 // to search the info of the item(1) ID

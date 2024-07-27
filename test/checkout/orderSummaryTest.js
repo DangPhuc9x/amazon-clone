@@ -1,6 +1,6 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
-import { loadProducts } from "../../data/products.js";
+import { loadProducts, loadProductsFetch } from "../../data/products.js";
 
 // Integration test
 // Test website: How the page looks
@@ -43,7 +43,9 @@ describe('TEST SUITE: renderOrderSummary', () => {
     // Built-in function: done()
     // Wait until this function being called, then continue the program
     beforeAll((done) => {
-        loadProducts(() => {
+        // Return a promise
+        // To continue, use .then
+        loadProductsFetch().then(() => {
             done();
         });
     });
