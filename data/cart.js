@@ -71,3 +71,20 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 
     saveToStorage();
 }
+
+// Load product from BACKEND server
+// Wait for receiving HTTP response finished
+// After that, run the func() 
+export function loadCart(func) {
+  const xhr = new XMLHttpRequest();
+  let responseMessage;
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.response);
+
+    func();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
+};
