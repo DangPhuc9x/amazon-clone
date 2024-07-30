@@ -766,7 +766,7 @@ export function loadProductsFetch() {
   const promise = fetch('https://supersimplebackend.dev/products')
     .then((response) => {
       // When return a promise, it will wait until finish
-      // AUTO exec JSON.parse() for us
+      // AUTO exec JSON.parse() for us, save data back to response
       return response.json();
     })
     .then((productData) => {

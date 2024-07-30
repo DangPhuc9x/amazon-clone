@@ -16,7 +16,11 @@ xhr.addEventListener('load', () => {
 // Setup the request to give to backend
 // HTTP: Hypertext Transfer Protocol
 // URL: Uniform Resource Locator
-// (1) : HTTP send message (GET, POST, PUT, DELETE)
+// (1) : HTTP send message 
+//       'GET': Get something from the BACKEND
+//       'POST': Want BE to create something
+//       'PUT': Update something
+//       'DELETE': Delete something
 // (2) : Where to send (URL of backend destination)
 
 // Plain text type response
