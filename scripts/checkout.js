@@ -133,17 +133,61 @@ loadPage().then((value) => {
 });
 */
 
+/*
 // Async await
 // FUNC: Make a function return a promise (Shortcut for Promise)
 // NOTE: Return value will be saved in a param input inside next .then()
 async function loadPage() {
-    await loadProductsFetch()
+    try {
+        // // Create an error
+        // // value 'error1' will be saved inside 'error' inside catch
+        // throw 'error1';
 
-    await new Promise((resolve) => {
-        loadCart(() => {
-            resolve();
+        await loadProductsFetch()
+
+        // Instead of .then(), await will return value of resolve() to itself <value>
+        const value = await new Promise((resolve) => {
+            // throw 'error2';
+            loadCart(() => {
+                const returnValue = 'await return';
+                resolve(returnValue);
+            });
         });
-    })
+    } catch (error) {
+        console.log('Unexpexted error. Please try again later.');
+        console.log(error);
+    }
+
+    renderOrderSummary();
+    renderPaymentSummary();
+}
+*/
+
+// Async await
+// FUNC: Make a function return a promise (Shortcut for Promise)
+// NOTE: Return value will be saved in a param input inside next .then()
+async function loadPage() {
+    try {
+        // // Create an error
+        // // value 'error1' will be saved inside 'error' inside catch
+        // throw 'error1';
+
+        await loadProductsFetch()
+
+        // Instead of .then(), await will return value of resolve() to itself <value>
+        // reject(): function to create an error in the future
+        const value = await new Promise((resolve, reject) => {
+            // throw 'error2';
+            loadCart(() => {
+                // reject('error3');
+                const returnValue = 'await return';
+                resolve(returnValue);
+            });
+        });
+    } catch (error) {
+        console.log('Unexpexted error. Please try again later.');
+        console.log(error);
+    }
 
     renderOrderSummary();
     renderPaymentSummary();

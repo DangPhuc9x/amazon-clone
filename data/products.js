@@ -746,6 +746,12 @@ export function loadProducts(func) {
     func();
   });
 
+  // Add a CALLBACK for ERROR HANDLING
+  xhr.addEventListener('error', (error) => {
+    console.log('Unexpexted error. Please try again later.');
+    console.log(error);
+  });
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 };
@@ -757,20 +763,26 @@ export function loadProductsFetch() {
   // NOTE: Create a promise
   //       All the responde from BACKEND will be saved inside a param of the next step
   //                                                          <response> param inside .then(response)
-  const promise = fetch('https://supersimplebackend.dev/products').then((response) => {
-    // When return a promise, it will wait until finish
-    // AUTO exec JSON.parse() for us
-    return response.json();
-  }).then((productData) => {
-    products = productData.map((productDetails) => {
-      if (productDetails.type === 'clothing') {
-        return new Clothing(productDetails);
-      }
-      return new Product(productDetails);
+  const promise = fetch('https://supersimplebackend.dev/products')
+    .then((response) => {
+      // When return a promise, it will wait until finish
+      // AUTO exec JSON.parse() for us
+      return response.json();
+    })
+    .then((productData) => {
+      products = productData.map((productDetails) => {
+        if (productDetails.type === 'clothing') {
+          return new Clothing(productDetails);
+        }
+        return new Product(productDetails);
+      });
+      console.log('load products');
+    })
+    // Catch error when fetch() exec, run func
+    .catch((error) => {
+      console.log('Unexpexted error. Please try again later.');
+      console.log(error);
     });
-  });
-
-  console.log('load products');
 
   // Return the promise after the function
   // To do something after the process (Ex: loadProductsFetch().then())
