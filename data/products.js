@@ -753,9 +753,10 @@ export function loadProducts(func) {
 // fetch(): Send HTTP message but uses Promise()
 export function loadProductsFetch() {
   // fetch(): Make 'GET' request
-  // Create a promise
-  // All the responde from BACKEND will be saved inside a param of the next step
-  //                                                    <response> param inside .then(response)
+  // INPUT: BACKEND link
+  // NOTE: Create a promise
+  //       All the responde from BACKEND will be saved inside a param of the next step
+  //                                                          <response> param inside .then(response)
   const promise = fetch('https://supersimplebackend.dev/products').then((response) => {
     // When return a promise, it will wait until finish
     // AUTO exec JSON.parse() for us
@@ -768,6 +769,8 @@ export function loadProductsFetch() {
       return new Product(productDetails);
     });
   });
+
+  console.log('load products');
 
   // Return the promise after the function
   // To do something after the process (Ex: loadProductsFetch().then())

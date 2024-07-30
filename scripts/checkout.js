@@ -92,6 +92,7 @@ Promise.all([
 });
 */
 
+/*
 // Promise.all() VER 4
 Promise.all([
     loadProductsFetch(),
@@ -101,7 +102,51 @@ Promise.all([
         });
     })
 ]).then((values) => {
+    console.log(`1. Values = ${values}`);
     renderOrderSummary();
     renderPaymentSummary();
 });
+*/
 
+/*
+// Async await
+// FUNC: Make a function return a promise (Shortcut for Promise)
+// NOTE: Return value will be saved in a param input inside next .then()
+async function loadPage() {
+    console.log('2. load page');
+
+    await loadProductsFetch()
+
+    new Promise((resolve) => {
+        loadCart(() => {
+            resolve();
+        });
+    })
+    
+    const returnValue = 2;
+    return returnValue;
+}
+
+loadPage().then((value) => {
+    console.log('3. async next step');
+    console.log(`4. Value = ${value}`);     // value = returnValue
+});
+*/
+
+// Async await
+// FUNC: Make a function return a promise (Shortcut for Promise)
+// NOTE: Return value will be saved in a param input inside next .then()
+async function loadPage() {
+    await loadProductsFetch()
+
+    await new Promise((resolve) => {
+        loadCart(() => {
+            resolve();
+        });
+    })
+
+    renderOrderSummary();
+    renderPaymentSummary();
+}
+
+loadPage();
